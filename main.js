@@ -33,21 +33,36 @@ function addTask() {
     newRow.insertCell(2).textContent = entryPoints;
     newRow.insertCell(3).textContent = entryUser;
 
-    // Create a button for the "Action" column
-    var actionButton = document.createElement("button");
-    actionButton.textContent = "Edit";
-    actionButton.onclick = function () {
+    // Create a button for the "Action" column (Edit)
+    var editButton = document.createElement("button");
+    editButton.textContent = "Edit";
+    editButton.onclick = function () {
         // Call the editTask function with the corresponding entry ID
         editTask(entryName);
     };
 
-    // Insert the button in the "Action" column
-    newRow.insertCell(4).appendChild(actionButton);
+    // Create a button for the "Action" column (Delete)
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = function () {
+        // Call the deleteTask function with the corresponding entry ID
+        deleteTask(entryName);
+    };
+
+    // Create a div for the buttons and append them
+    var buttonsDiv = document.createElement("div");
+    buttonsDiv.classList.add("entry-buttons");
+    buttonsDiv.appendChild(editButton);
+    buttonsDiv.appendChild(deleteButton);
+
+    // Insert the buttons div in the "Action" column
+    newRow.insertCell(4).appendChild(buttonsDiv);
 
     // Clear the form and hide it
     document.getElementById("taskForm").reset();
     document.getElementById("entryForm").style.display = "none";
 }
+
 
 function toggleDescription(button) {
     var task = button.parentElement;
