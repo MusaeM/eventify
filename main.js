@@ -63,65 +63,33 @@ function addTask() {
     document.getElementById("entryForm").style.display = "none";
 }
 
+function editTask(entryName) {
+    // Retrieve the row corresponding to the entryName
+    var taskRow = document.getElementById(entryName);
 
-function toggleDescription(button) {
-    var task = button.parentElement;
-    var description = task.querySelector("span");
-    description.style.display = description.style.display === "none" ? "inline" : "none";
+    // Extract existing data from the row
+    var existingName = taskRow.cells[0].textContent;
+    var existingDescription = taskRow.cells[1].textContent;
+    var existingPoints = taskRow.cells[2].textContent;
+    var existingUser = taskRow.cells[3].textContent;
+
+    // Populate the form with existing data
+    document.getElementById("entryName").value = existingName;
+    document.getElementById("entryDescription").value = existingDescription;
+    document.getElementById("entryPoints").value = existingPoints;
+    document.getElementById("entryUser").value = existingUser;
+
+    // Show the form for editing
+    document.getElementById("entryForm").style.display = "block";
+
+    // Remove the existing row from the table
+    taskRow.parentElement.removeChild(taskRow);
 }
 
-function editTask(button) {
-    var task = button.parentElement;
-    var taskData = {
-        name: task.querySelector("h3").textContent,
-        description: task.querySelector("span").textContent,
-        points: task.querySelector("p:nth-child(3) span").textContent,
-        user: task.querySelector("p:nth-child(4) span").textContent
-    };
+function deleteTask(entryName) {
+    // Retrieve the row corresponding to the entryName
+    var taskRow = document.getElementById(entryName);
 
-    // Convert the task to a form for editing
-    task.innerHTML = `
-        <form id="editForm">
-            <label for="editName">Name:</label>
-            <input type="text" id="editName" value="${taskData.name}" required>
-            <label for="editDescription">Description:</label>
-            <textarea id="editDescription">${taskData.description}</textarea>
-            <label for="editPoints">Points:</label>
-            <input type="number" id="editPoints" value="${taskData.points}" required>
-            <label for="editUser">User:</label>
-            <input type="text" id="editUser" value="${taskData.user}" required>
-            <button type="button" onclick="saveEdit(this)">Save</button>
-        </form>
-    `;
-}
-
-function saveEdit(button) {
-    var editedForm = button.parentElement;
-    var task = editedForm.parentElement;
-
-    // Get the edited data
-    var editedData = {
-        name: editedForm.querySelector("#editName").value,
-        description: editedForm.querySelector("#editDescription").value,
-        points: editedForm.querySelector("#editPoints").value,
-        user: editedForm.querySelector("#editUser").value
-    };
-
-    // Update the task with the edited data
-    task.innerHTML = `
-        <h3>${editedData.name}</h3>
-        <p>Description: <span>${editedData.description}</span></p>
-        <p>Points: <span>${editedData.points}</span></p>
-        <p>User: <span>${editedData.user}</span></p>
-        <button onclick="toggleDescription(this)">Toggle Description</button>
-        <button onclick="editTask(this)">Edit</button>
-    `;
-    
-    var deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.onclick = function() {
-        task.parentElement.removeChild(task);
-    };
-    
-    task.appendChild(deleteButton);
+    // Remove the row from the table
+    taskRow.parentElement.removeChild(taskRow);
 }
