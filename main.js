@@ -1,6 +1,35 @@
 let currentFolder = null;
 let foldersData = []; // Array to store folder information
 
+// Function to check the entered password
+function checkPassword() {
+    const enteredPassword = document.getElementById('appPassword').value;
+    const correctPassword = 'eventify1e3T'; // Replace with your actual password
+
+    if (enteredPassword === correctPassword) {
+        // Password correct, display the app content
+        document.getElementById('passwordPrompt').style.display = 'none';
+        document.querySelector('.container').style.display = 'block';
+    } else {
+        // Password incorrect, show an alert
+        alert('Incorrect password. Please try again.');
+    }
+}
+
+// Initial check if the user needs to enter the password
+window.onload = function () {
+    const passwordPrompt = document.getElementById('passwordPrompt');
+    const appContainer = document.querySelector('.container');
+
+    // Check if the password is set (you can use a more secure way to store this)
+    const hasPassword = true; // Set to true if you want to use a password
+
+    if (hasPassword) {
+        passwordPrompt.style.display = 'block';
+        appContainer.style.display = 'none';
+    }
+};
+
 // Function to display folders in tabular form
 async function displayFolders() {
     const folderListContainer = document.getElementById('folderList');
