@@ -52,6 +52,33 @@ function createFolderListTable(folderList) {
     return table;
 }
 
+// Function to display entries in the folder content
+function displayEntries(entries) {
+    const taskListTable = document.getElementById('taskListTable');
+    const taskList = document.getElementById('taskList');
+
+    // Clear the existing table
+    taskList.innerHTML = '';
+
+    entries.forEach(entry => {
+        const newRow = document.createElement('tr');
+        newRow.id = entry.name;
+
+        newRow.innerHTML = `<td>${entry.name}</td>
+                            <td>${entry.description}</td>
+                            <td>${entry.points}</td>
+                            <td>${entry.user}</td>
+                            <td class="entry-buttons">
+                                <button onclick="editTask('${entry.name}')">Edit</button>
+                                <button onclick="deleteTask('${entry.name}')">Delete</button>
+                            </td>`;
+
+        taskList.appendChild(newRow);
+    });
+
+    taskListTable.style.display = 'block';
+}
+
 // Function to open a folder
 async function openFolder(folderName) {
     const passwordInput = prompt('Enter the password for the folder:');
@@ -68,7 +95,10 @@ async function openFolder(folderName) {
         if (selectedFolder && passwordInput === selectedFolder.password) {
             currentFolder = folderName;
 
-            // Check if elements are not null before accessing their properties
+            // Display entries in the folder content
+            displayEntries(selectedFolder.entries);
+
+            // Show the folder content
             const folderListElement = document.getElementById('folderList');
             const folderContentElement = document.getElementById('folderContent');
             const entryFormElement = document.getElementById('entryForm');
@@ -87,7 +117,6 @@ async function openFolder(folderName) {
         console.error('Error opening folder:', error);
     }
 }
-
 
 // Function to edit a folder
 async function editFolder(folderName) {
