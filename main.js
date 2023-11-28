@@ -81,7 +81,20 @@ async function openFolder(folderName) {
 
                 // Display entries in a new table underneath the folder table
                 const entryTable = createEntryTable(selectedFolder.entries);
-                folderContentElement.appendChild(entryTable);
+                
+                // Find or create a tbody in the folderContentElement
+                let tbody = folderContentElement.querySelector('#entryTableBody');
+                if (!tbody) {
+                    tbody = document.createElement('tbody');
+                    tbody.id = 'entryTableBody';
+                }
+
+                // Clear existing content and append the entries table
+                tbody.innerHTML = '';
+                tbody.appendChild(entryTable);
+
+                // Append the tbody to the folderContentElement
+                folderContentElement.appendChild(tbody);
             } else {
                 console.error('Error: One or more elements are null.');
             }
