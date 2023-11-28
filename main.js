@@ -1,7 +1,7 @@
 function openFolder() {
     var password = document.getElementById("folderPassword").value;
     // Check password (you may want to implement proper authentication)
-    if (password === "yourpassword") {
+    if (password === "eventify") {
         document.getElementById("folderContent").style.display = "block";
         document.getElementById("taskListContainer").removeChild(document.getElementById("folderPassword"));
         document.getElementById("taskListContainer").removeChild(document.querySelector("button"));
