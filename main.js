@@ -52,33 +52,6 @@ function createFolderListTable(folderList) {
     return table;
 }
 
-// Function to display entries in the folder content
-function displayEntries(entries) {
-    const taskListTable = document.getElementById('taskListTable');
-    const taskList = document.getElementById('taskList');
-
-    // Clear the existing table
-    taskList.innerHTML = '';
-
-    entries.forEach(entry => {
-        const newRow = document.createElement('tr');
-        newRow.id = entry.name;
-
-        newRow.innerHTML = `<td>${entry.name}</td>
-                            <td>${entry.description}</td>
-                            <td>${entry.points}</td>
-                            <td>${entry.user}</td>
-                            <td class="entry-buttons">
-                                <button onclick="editTask('${entry.name}')">Edit</button>
-                                <button onclick="deleteTask('${entry.name}')">Delete</button>
-                            </td>`;
-
-        taskList.appendChild(newRow);
-    });
-
-    taskListTable.style.display = 'block';
-}
-
 // Function to open a folder
 async function openFolder(folderName) {
     const passwordInput = prompt('Enter the password for the folder:');
@@ -95,13 +68,10 @@ async function openFolder(folderName) {
         if (selectedFolder && passwordInput === selectedFolder.password) {
             currentFolder = folderName;
 
-            // Display entries in the folder content
-            displayEntries(selectedFolder.entries);
-
-            // Show the folder content
+            // Check if elements are not null before accessing their properties
             const folderListElement = document.getElementById('folderList');
             const folderContentElement = document.getElementById('folderContent');
-            const entryFormElement = document.getElementById('entryForm');
+            const entryFormElement = document.getElementById('taskForm');
 
             if (folderListElement && folderContentElement && entryFormElement) {
                 folderListElement.style.display = 'none';
@@ -172,114 +142,8 @@ function resetApp() {
     document.getElementById('folderPassword').value = '';
     document.getElementById('folderList').style.display = 'block';
     document.getElementById('folderContent').style.display = 'none';
-    document.getElementById('entryForm').style.display = 'none';
+    document.getElementById('taskForm').style.display = 'none';
 }
 
 // Initial display of folders
 displayFolders();
-
-// Existing functions for managing tasks (addTask, editTask, deleteTask, etc.) go here
-
-// Function to check the password and proceed to the folder content
-function checkPassword() {
-    const passwordInput = document.getElementById('folderPassword').value;
-
-    // Placeholder logic: Assume password checking logic here (replace with your own logic)
-    const isPasswordCorrect = true; // Replace with actual password validation
-
-    if (isPasswordCorrect) {
-        document.getElementById('folderList').style.display = 'none';
-        document.getElementById('folderContent').style.display = 'block';
-        document.getElementById('entryForm').style.display = 'block';
-    } else {
-        alert('Incorrect password. Please try again.');
-    }
-}
-
-// Function to show the add entry form
-function showAddForm() {
-    document.getElementById('entryForm').style.display = 'block';
-}
-
-// Function to add a task
-function addTask() {
-    const taskTable = document.getElementById('taskListTable');
-    const entryName = document.getElementById('entryName').value;
-    const entryDescription = document.getElementById('entryDescription').value;
-    const entryPoints = document.getElementById('entryPoints').value;
-    const entryUser = document.getElementById('entryUser').value;
-
-    // Create a new row for the table
-    const newRow = taskTable.insertRow();
-
-    // Assign entry name as the ID for the row
-    newRow.id = entryName;
-
-    // Insert cells in the row with corresponding data
-    newRow.insertCell(0).textContent = entryName;
-    newRow.insertCell(1).textContent = entryDescription;
-    newRow.insertCell(2).textContent = entryPoints;
-    newRow.insertCell(3).textContent = entryUser;
-
-    // Create a button for the "Action" column (Edit)
-    const editButton = document.createElement('button');
-    editButton.textContent = 'Edit';
-    editButton.onclick = function () {
-        // Call the editTask function with the corresponding entry ID
-        editTask(entryName);
-    };
-
-    // Create a button for the "Action" column (Delete)
-    const deleteButton = document.createElement('button');
-    deleteButton.textContent = 'Delete';
-    deleteButton.onclick = function () {
-        // Call the deleteTask function with the corresponding entry ID
-        deleteTask(entryName);
-    };
-
-    // Create a div for the buttons and append them
-    const buttonsDiv = document.createElement('div');
-    buttonsDiv.classList.add('entry-buttons');
-    buttonsDiv.appendChild(editButton);
-    buttonsDiv.appendChild(deleteButton);
-
-    // Insert the buttons div in the "Action" column
-    newRow.insertCell(4).appendChild(buttonsDiv);
-
-    // Clear the form and hide it
-    document.getElementById('taskForm').reset();
-    document.getElementById('entryForm').style.display = 'none';
-}
-
-// Function to edit a task
-function editTask(entryName) {
-    // Retrieve the row corresponding to the entryName
-    const taskRow = document.getElementById(entryName);
-
-    // Extract existing data from the row
-    const existingName = taskRow.cells[0].textContent;
-    const existingDescription = taskRow.cells[1].textContent;
-    const existingPoints = taskRow.cells[2].textContent;
-    const existingUser = taskRow.cells[3].textContent;
-
-    // Populate the form with existing data
-    document.getElementById('entryName').value = existingName;
-    document.getElementById('entryDescription').value = existingDescription;
-    document.getElementById('entryPoints').value = existingPoints;
-    document.getElementById('entryUser').value = existingUser;
-
-    // Show the form for editing
-    document.getElementById('entryForm').style.display = 'block';
-
-    // Remove the existing row from the table
-    taskRow.parentElement.removeChild(taskRow);
-}
-
-// Function to delete a task
-function deleteTask(entryName) {
-    // Retrieve the row corresponding to the entryName
-    const taskRow = document.getElementById(entryName);
-
-    // Remove the row from the table
-    taskRow.parentElement.removeChild(taskRow);
-}
