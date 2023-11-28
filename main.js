@@ -15,32 +15,34 @@ function showAddForm() {
 }
 
 function addTask() {
-    var taskList = document.getElementById("taskList");
+    var taskTable = document.getElementById("taskListTable");
     var entryName = document.getElementById("entryName").value;
     var entryDescription = document.getElementById("entryDescription").value;
     var entryPoints = document.getElementById("entryPoints").value;
     var entryUser = document.getElementById("entryUser").value;
 
-    var taskEntry = document.createElement("div");
-    taskEntry.className = "task";
-    taskEntry.innerHTML = `
-        <h3>${entryName}</h3>
-        <p>Description: <span>${entryDescription}</span></p>
-        <p>Points: <span>${entryPoints}</span></p>
-        <p>User: <span>${entryUser}</span></p>
-        <button onclick="toggleDescription(this)">Toggle Description</button>
-        <button onclick="editTask(this)">Edit</button>
-    `;
-    
-    var deleteButton = document.createElement("button");
-    deleteButton.textContent = "Delete";
-    deleteButton.onclick = function() {
-        taskList.removeChild(taskEntry);
+    // Create a new row for the table
+    var newRow = taskTable.insertRow();
+
+    // Assign entry name as the ID for the row
+    newRow.id = entryName;
+
+    // Insert cells in the row with corresponding data
+    newRow.insertCell(0).textContent = entryName;
+    newRow.insertCell(1).textContent = entryDescription;
+    newRow.insertCell(2).textContent = entryPoints;
+    newRow.insertCell(3).textContent = entryUser;
+
+    // Create a button for the "Action" column
+    var actionButton = document.createElement("button");
+    actionButton.textContent = "Edit";
+    actionButton.onclick = function () {
+        // Call the editTask function with the corresponding entry ID
+        editTask(entryName);
     };
-    
-    taskEntry.appendChild(deleteButton);
-    
-    taskList.appendChild(taskEntry);
+
+    // Insert the button in the "Action" column
+    newRow.insertCell(4).appendChild(actionButton);
 
     // Clear the form and hide it
     document.getElementById("taskForm").reset();
