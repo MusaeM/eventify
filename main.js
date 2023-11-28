@@ -17,8 +17,8 @@ function addTask() {
     newTask.id = taskId;
     newTask.innerHTML = `
         <h3>Task ${taskCount}</h3>
-        <p>Description: <input type="text" id="desc${taskCount}"></p>
-        <p>Points: <input type="number" id="points${taskCount}" value="10"></p>
+        <p>Description: <span id="desc${taskCount}" contenteditable="true"></span></p>
+        <p>Points: <span id="points${taskCount}" contenteditable="true">10</span></p>
         <p>User: <select id="user${taskCount}"><option value="user1">User 1</option></select></p>
         <label>Done: <input type="checkbox" id="done${taskCount}"></label>
         <button onclick="editTask('${taskId}')">Edit</button>
@@ -28,11 +28,33 @@ function addTask() {
 }
 
 function editTask(taskId) {
-    // Implement edit functionality as needed
-    alert("Edit task: " + taskId);
-}
-
-function deleteTask(taskId) {
     var task = document.getElementById(taskId);
-    task.parentNode.removeChild(task);
+    var editButtons = task.getElementsByClassName("edit-button");
+    
+    // Disable contenteditable for all tasks
+    var allTasks = document.getElementsByClassName("task");
+    for (var i = 0; i < allTasks.length; i++) {
+        var taskElements = allTasks[i].querySelectorAll('[contenteditable="true"]');
+        for (var j = 0; j < taskElements.length; j++) {
+            taskElements[j].setAttribute("contenteditable", "false");
+        }
+    }
+
+    // Enable contenteditable only for the clicked task
+    var taskElementsToEdit = task.querySelectorAll('[contenteditable="true"]');
+    for (var k = 0; k < taskElementsToEdit.length; k++) {
+        taskElementsToEdit[k].setAttribute("contenteditable", "true");
+    }
+
+    // Add "Save" button to allow saving changes
+    if (editButtons.length === 0) {
+        var saveButton = document.createElement("button");
+        saveButton.textContent = "Save";
+        saveButton.className = "edit-button";
+        saveButton.onclick = function () {
+            // Implement save functionality as needed
+            alert("Save task: " + taskId);
+        };
+        task.appendChild(saveButton);
+    }
 }
