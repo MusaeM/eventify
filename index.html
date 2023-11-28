@@ -7,6 +7,14 @@
     <title>Eventify</title>
 </head>
 <body>
+
+    <!-- Password protect page -->
+<div id="passwordPrompt" style="display: none;">
+    <label for="appPassword">Enter the password:</label>
+    <input type="password" id="appPassword" />
+    <button onclick="checkPassword()">Submit</button>
+</div>
+
     <div class="container">
         <div id="folderList">
             <!-- Folder list will be displayed here -->
