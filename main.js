@@ -58,7 +58,7 @@ async function openFolder(folderName) {
 
     try {
         // Fetch folder data from the 'data.json' file
-        const response = await fetch('data.json');
+        const response = await fetch('./data.json');
         const foldersData = await response.json();
 
         // Find the folder with the specified name
@@ -76,7 +76,12 @@ async function openFolder(folderName) {
             if (folderListElement && folderContentElement && entryFormElement) {
                 folderListElement.style.display = 'none';
                 folderContentElement.style.display = 'block';
-                entryFormElement.style.display = 'block';
+                entryFormElement.style.display = 'none'; // Hide entry form for now
+
+                // Display entries in a horizontal table
+                const entryTable = createEntryTable(selectedFolder.entries);
+                folderContentElement.innerHTML = ''; // Clear existing content
+                folderContentElement.appendChild(entryTable);
             } else {
                 console.error('Error: One or more elements are null.');
             }
@@ -86,6 +91,39 @@ async function openFolder(folderName) {
     } catch (error) {
         console.error('Error opening folder:', error);
     }
+}
+
+// Function to create table for folder entries
+function createEntryTable(entries) {
+    const table = document.createElement('table');
+    table.id = 'entryTable';
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Name', 'Description', 'Points', 'User'];
+
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    entries.forEach(entry => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${entry.name}</td>
+                        <td>${entry.description}</td>
+                        <td>${entry.points}</td>
+                        <td>${entry.user}</td>`;
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    return table;
 }
 
 // Function to edit a folder
