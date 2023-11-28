@@ -1,17 +1,17 @@
 [
   {
-    "name": "Folder1",
-    "password": "folder1pass",
+    "name": "Johns Birthday",
+    "password": "eventify",
     "entries": [
       {
-        "name": "Entry1",
-        "description": "Description of Entry1",
+        "name": "Hug",
+        "description": "Description of Hug",
         "points": 10,
         "user": "User1"
       },
       {
-        "name": "Entry2",
-        "description": "Description of Entry2",
+        "name": "Fart",
+        "description": "Description of Fart",
         "points": 15,
         "user": "User2"
       },
@@ -24,8 +24,8 @@
     ]
   },
   {
-    "name": "Folder2",
-    "password": "folder2pass",
+    "name": "Foo Fighters Concert",
+    "password": "eventify",
     "entries": [
       {
         "name": "Entry4",
@@ -48,8 +48,8 @@
     ]
   },
   {
-    "name": "Folder3",
-    "password": "folder3pass",
+    "name": "New Years Eve",
+    "password": "eventify",
     "entries": [
       {
         "name": "Entry7",
