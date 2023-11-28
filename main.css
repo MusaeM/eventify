@@ -1,11 +1,36 @@
 #passwordPrompt {
     text-align: center;
     margin-top: 50px;
+    border: 1px solid #fff; /* White border */
+    border-radius: 8px; /* Rounded corners */
+    padding: 20px; /* Add some padding */
+    background-color: #fff; /* White background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Box shadow for a subtle effect */
 }
 
 #passwordPrompt label {
     margin-right: 10px;
 }
+
+#passwordPrompt input {
+    padding: 8px;
+    border: 1px solid #ccc; /* Light gray border for the input field */
+    border-radius: 3px; /* Rounded corners for the input field */
+}
+
+#passwordPrompt button {
+    padding: 8px 15px;
+    background-color: #fe5f75;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#passwordPrompt button:hover {
+    background-color: #d64558;
+}
+
 
 body {
     font-family: 'Arial', sans-serif;
