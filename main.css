@@ -6,7 +6,7 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #f2f2f2;
+    background-color: #fe5f75; /* Tinder red background color */
 }
 
 .container {
@@ -42,7 +42,7 @@ body {
 }
 
 .task {
-    background-color: #f9f9f9;
+    background-color: #fff; /* White background for entries */
     border: 1px solid #ddd;
     padding: 10px;
     margin: 10px;
@@ -55,17 +55,6 @@ body {
 .task button {
     margin-top: 5px;
 }
-
-
-.entry-buttons {
-    display: flex;
-    justify-content: flex-end;
-}
-
-.entry-buttons button {
-    margin-left: 5px;
-}
-
 
 .form-group {
     display: flex;
@@ -99,6 +88,25 @@ body {
 }
 
 #taskListTable th {
-    background-color: #f2f2f2;
+    background-color: #fe5f75; /* Tinder red header background color */
+    color: #fff; /* White text color for header */
 }
 
+.entry-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.entry-buttons button {
+    margin-left: 5px;
+    background-color: #fe5f75; /* Tinder red button background color */
+    color: #fff; /* White text color for button */
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+.entry-buttons button:hover {
+    background-color: #d64558; /* Slightly darker red on hover */
+}
