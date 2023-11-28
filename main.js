@@ -93,6 +93,7 @@ async function openFolder(folderName) {
     }
 }
 
+
 // Function to create table for folder entries
 function createEntryTable(entries) {
     const table = document.createElement('table');
