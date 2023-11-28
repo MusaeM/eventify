@@ -4,51 +4,51 @@ let currentFolder = null;
 async function displayFolders() {
     const folderListContainer = document.getElementById('folderList');
 
-    // Fetch folders from the 'data' directory
     try {
-        const response = await fetch('https://musaem.github.io/data/');
+        const response = await fetch('./');
         const folderList = await response.json();
 
-        // Create a table for the folder list
-        const table = document.createElement('table');
-        table.id = 'folderListTable';
-
-        // Create table headers
-        const thead = document.createElement('thead');
-        const headerRow = document.createElement('tr');
-        const headers = ['Name', 'Actions'];
-
-        headers.forEach(headerText => {
-            const th = document.createElement('th');
-            th.textContent = headerText;
-            headerRow.appendChild(th);
-        });
-
-        thead.appendChild(headerRow);
-        table.appendChild(thead);
-
-        // Create table body
-        const tbody = document.createElement('tbody');
-
-        folderList.forEach(folderName => {
-            const tr = document.createElement('tr');
-            tr.innerHTML = `<td>${folderName}</td>
-                            <td>
-                                <button onclick="openFolder('${folderName}')">Open</button>
-                                <button onclick="editFolder('${folderName}')">Edit</button>
-                                <button onclick="deleteFolder('${folderName}')">Delete</button>
-                            </td>`;
-            tbody.appendChild(tr);
-        });
-
-        table.appendChild(tbody);
-
-        // Append the table to the folder list container
+        const table = createFolderListTable(folderList);
         folderListContainer.innerHTML = '';
         folderListContainer.appendChild(table);
     } catch (error) {
         console.error('Error fetching folders:', error);
     }
+}
+
+// Function to create table for folder list
+function createFolderListTable(folderList) {
+    const table = document.createElement('table');
+    table.id = 'folderListTable';
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Name', 'Actions'];
+
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
+    });
+
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    folderList.forEach(folderName => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${folderName}</td>
+                        <td>
+                            <button onclick="openFolder('${folderName}')">Open</button>
+                            <button onclick="editFolder('${folderName}')">Edit</button>
+                            <button onclick="deleteFolder('${folderName}')">Delete</button>
+                        </td>`;
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    return table;
 }
 
 // Function to open a folder
@@ -65,15 +65,10 @@ async function editFolder(folderName) {
 
     if (updatedFolderName !== null && updatedFolderName !== '') {
         try {
-            // Rename the folder and its associated JSON file
-            const oldFolderPath = `https://musaem.github.io/data/${folderName}_entries.json`;
-            const newFolderPath = `https://musaem.github.io/data/${updatedFolderName}_entries.json`;
+            const oldFolderPath = `${folderName}_entries.json`;
+            const newFolderPath = `${updatedFolderName}_entries.json`;
 
-            // Fetch existing entries
-            const response = await fetch(oldFolderPath);
-            const entries = await response.json();
-
-            // Create or update the new folder with the existing entries
+            const entries = await fetchJson(oldFolderPath);
             await fetch(newFolderPath, {
                 method: 'PUT',
                 body: JSON.stringify(entries),
@@ -82,12 +77,7 @@ async function editFolder(folderName) {
                 },
             });
 
-            // Delete the old folder
-            await fetch(oldFolderPath, {
-                method: 'DELETE',
-            });
-
-            // Display the updated folder list
+            await deleteFolder(folderName);
             displayFolders();
         } catch (error) {
             console.error('Error updating folder:', error);
@@ -101,12 +91,11 @@ async function deleteFolder(folderName) {
 
     if (confirmDelete) {
         try {
-            const folderPath = `https://musaem.github.io/data/${folderName}_entries.json`;
+            const folderPath = `${folderName}_entries.json`;
             await fetch(folderPath, {
                 method: 'DELETE',
             });
 
-            // Display the updated folder list
             displayFolders();
         } catch (error) {
             console.error('Error deleting folder:', error);
@@ -117,7 +106,7 @@ async function deleteFolder(folderName) {
 // Function to reset the app
 function resetApp() {
     currentFolder = null;
-    document.getElementById('newFolderName').value = '';
+    document.getElementById('folderPassword').value = '';
     document.getElementById('folderList').style.display = 'block';
     document.getElementById('folderContent').style.display = 'none';
     document.getElementById('entryForm').style.display = 'none';
@@ -129,27 +118,18 @@ displayFolders();
 // Existing functions for managing tasks (addTask, editTask, deleteTask, etc.) go here
 
 // Function to check the password and proceed to the folder content
-async function checkPassword() {
+function checkPassword() {
     const passwordInput = document.getElementById('folderPassword').value;
 
-    if (passwordInput.trim() !== '') {
-        try {
-            const folderPath = `https://musaem.github.io/data/${currentFolder}_password.json`;
-            const response = await fetch(folderPath);
-            const storedPassword = await response.json();
+    // Placeholder logic: Assume password checking logic here (replace with your own logic)
+    const isPasswordCorrect = true; // Replace with actual password validation
 
-            if (passwordInput === storedPassword.password) {
-                document.getElementById('folderList').style.display = 'none';
-                document.getElementById('folderContent').style.display = 'block';
-                document.getElementById('entryForm').style.display = 'block';
-            } else {
-                alert('Incorrect password. Please try again.');
-            }
-        } catch (error) {
-            console.error('Error fetching password:', error);
-        }
+    if (isPasswordCorrect) {
+        document.getElementById('folderList').style.display = 'none';
+        document.getElementById('folderContent').style.display = 'block';
+        document.getElementById('entryForm').style.display = 'block';
     } else {
-        alert('Please enter a password.');
+        alert('Incorrect password. Please try again.');
     }
 }
 
@@ -204,7 +184,7 @@ function addTask() {
     newRow.insertCell(4).appendChild(buttonsDiv);
 
     // Clear the form and hide it
-    document.getElementById('entryForm').reset();
+    document.getElementById('taskForm').reset();
     document.getElementById('entryForm').style.display = 'none';
 }
 
