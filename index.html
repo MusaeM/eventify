@@ -5,53 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="main.css">
     <title>Password-Protected Folders</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-        }
-        .folder {
-            border: 1px solid #ccc;
-            padding: 10px;
-            margin: 10px;
-            width: 200px;
-            text-align: center;
-            position: relative;
-        }
-        .folder input {
-            margin-bottom: 5px;
-        }
-        .folder-content {
-            display: none;
-            margin-top: 10px;
-        }
-        .entry {
-            border: 1px solid #ddd;
-            padding: 5px;
-            margin: 5px;
-            background-color: #f9f9f9;
-        }
-    </style>
 </head>
 <body>
 
-<div class="folder">
-    <input type="password" placeholder="Enter Password" id="folderPassword">
-    <button onclick="openFolder()">Open Folder</button>
-    <div class="folder-content" id="folderContent">
-        <h2>Folder Name</h2>
-        <div>
-            <h3>Entries</h3>
-            <div class="entry" id="entry1">
-                <h4>Entry 1</h4>
-                <p>Description: Lorem ipsum dolor sit amet.</p>
-                <p>Points: <span id="points1">10</span></p>
-                <p>User: <select id="user1"><option value="user1">User 1</option></select></p>
-                <label>Done: <input type="checkbox" id="done1"></label>
-                <button onclick="editEntry('entry1')">Edit</button>
-                <button onclick="deleteEntry('entry1')">Delete</button>
-            </div>
+<div class="container">
+    <div class="task-list">
+        <input type="password" placeholder="Enter Password" id="folderPassword">
+        <button onclick="openFolder()">Open Folder</button>
+        <div class="task-list-content" id="folderContent">
+            <h2>Folder Name</h2>
+            <!-- Task entries added by JS -->
         </div>
-        <button onclick="addEntry()">Add Entry</button>
+        <button onclick="addTask()">Add Task</button>
     </div>
 </div>
 
