@@ -1,0 +1,74 @@
+[
+  {
+    "name": "Folder1",
+    "password": "folder1pass",
+    "entries": [
+      {
+        "name": "Entry1",
+        "description": "Description of Entry1",
+        "points": 10,
+        "user": "User1"
+      },
+      {
+        "name": "Entry2",
+        "description": "Description of Entry2",
+        "points": 15,
+        "user": "User2"
+      },
+      {
+        "name": "Entry3",
+        "description": "Description of Entry3",
+        "points": 20,
+        "user": "User3"
+      }
+    ]
+  },
+  {
+    "name": "Folder2",
+    "password": "folder2pass",
+    "entries": [
+      {
+        "name": "Entry4",
+        "description": "Description of Entry4",
+        "points": 25,
+        "user": "User4"
+      },
+      {
+        "name": "Entry5",
+        "description": "Description of Entry5",
+        "points": 30,
+        "user": "User5"
+      },
+      {
+        "name": "Entry6",
+        "description": "Description of Entry6",
+        "points": 35,
+        "user": "User6"
+      }
+    ]
+  },
+  {
+    "name": "Folder3",
+    "password": "folder3pass",
+    "entries": [
+      {
+        "name": "Entry7",
+        "description": "Description of Entry7",
+        "points": 40,
+        "user": "User7"
+      },
+      {
+        "name": "Entry8",
+        "description": "Description of Entry8",
+        "points": 45,
+        "user": "User8"
+      },
+      {
+        "name": "Entry9",
+        "description": "Description of Entry9",
+        "points": 50,
+        "user": "User9"
+      }
+    ]
+  }
+]
