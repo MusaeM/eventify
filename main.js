@@ -75,9 +75,9 @@ async function openFolder(folderName) {
             const entryFormElement = document.getElementById('taskForm');
 
             if (folderListElement && folderContentElement && entryFormElement) {
+                // Hide folder table and entry form
                 folderListElement.style.display = 'none';
-                folderContentElement.style.display = 'block';
-                entryFormElement.style.display = 'none'; // Hide entry form for now
+                entryFormElement.style.display = 'none';
 
                 // Display entries in a new table underneath the folder table
                 const entryTable = createEntryTable(selectedFolder.entries);
@@ -95,6 +95,9 @@ async function openFolder(folderName) {
 
                 // Append the tbody to the folderContentElement
                 folderContentElement.appendChild(tbody);
+
+                // Show folder content
+                folderContentElement.style.display = 'block';
             } else {
                 console.error('Error: One or more elements are null.');
             }
@@ -105,6 +108,7 @@ async function openFolder(folderName) {
         console.error('Error opening folder:', error);
     }
 }
+
 
 // Function to create table for folder entries
 function createEntryTable(entries) {
