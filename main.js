@@ -1,14 +1,15 @@
 let currentFolder = null;
+let foldersData = []; // Array to store folder information
 
 // Function to display folders in tabular form
 async function displayFolders() {
     const folderListContainer = document.getElementById('folderList');
 
     try {
-        const response = await fetch('./');
-        const folderList = await response.json();
+        const response = await fetch('./data.json');
+        foldersData = await response.json();
 
-        const table = createFolderListTable(folderList);
+        const table = createFolderListTable(foldersData);
         folderListContainer.innerHTML = '';
         folderListContainer.appendChild(table);
     } catch (error) {
@@ -36,13 +37,13 @@ function createFolderListTable(folderList) {
 
     const tbody = document.createElement('tbody');
 
-    folderList.forEach(folderName => {
+    folderList.forEach(folder => {
         const tr = document.createElement('tr');
-        tr.innerHTML = `<td>${folderName}</td>
+        tr.innerHTML = `<td>${folder.name}</td>
                         <td>
-                            <button onclick="openFolder('${folderName}')">Open</button>
-                            <button onclick="editFolder('${folderName}')">Edit</button>
-                            <button onclick="deleteFolder('${folderName}')">Delete</button>
+                            <button onclick="openFolder('${folder.name}')">Open</button>
+                            <button onclick="editFolder('${folder.name}')">Edit</button>
+                            <button onclick="deleteFolder('${folder.name}')">Delete</button>
                         </td>`;
         tbody.appendChild(tr);
     });
@@ -65,20 +66,12 @@ async function editFolder(folderName) {
 
     if (updatedFolderName !== null && updatedFolderName !== '') {
         try {
-            const oldFolderPath = `${folderName}_entries.json`;
-            const newFolderPath = `${updatedFolderName}_entries.json`;
-
-            const entries = await fetchJson(oldFolderPath);
-            await fetch(newFolderPath, {
-                method: 'PUT',
-                body: JSON.stringify(entries),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            await deleteFolder(folderName);
-            displayFolders();
+            const updatedFolder = foldersData.find(folder => folder.name === folderName);
+            if (updatedFolder) {
+                updatedFolder.name = updatedFolderName;
+                await updateDataFile();
+                await displayFolders();
+            }
         } catch (error) {
             console.error('Error updating folder:', error);
         }
@@ -91,15 +84,27 @@ async function deleteFolder(folderName) {
 
     if (confirmDelete) {
         try {
-            const folderPath = `${folderName}_entries.json`;
-            await fetch(folderPath, {
-                method: 'DELETE',
-            });
-
-            displayFolders();
+            foldersData = foldersData.filter(folder => folder.name !== folderName);
+            await updateDataFile();
+            await displayFolders();
         } catch (error) {
             console.error('Error deleting folder:', error);
         }
+    }
+}
+
+// Function to update the data file
+async function updateDataFile() {
+    try {
+        await fetch('./data.json', {
+            method: 'PUT',
+            body: JSON.stringify(foldersData),
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+    } catch (error) {
+        console.error('Error updating data file:', error);
     }
 }
 
