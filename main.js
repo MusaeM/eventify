@@ -47,6 +47,49 @@ function toggleDescription(button) {
 }
 
 function editTask(button) {
-    // Implement edit functionality as needed
-    alert("Edit task: " + button.parentElement.querySelector("h3").textContent);
+    var task = button.parentElement;
+    var taskData = {
+        name: task.querySelector("h3").textContent,
+        description: task.querySelector("span").textContent,
+        points: task.querySelector("p:nth-child(3) span").textContent,
+        user: task.querySelector("p:nth-child(4) span").textContent
+    };
+
+    // Convert the task to a form for editing
+    task.innerHTML = `
+        <form id="editForm">
+            <label for="editName">Name:</label>
+            <input type="text" id="editName" value="${taskData.name}" required>
+            <label for="editDescription">Description:</label>
+            <textarea id="editDescription">${taskData.description}</textarea>
+            <label for="editPoints">Points:</label>
+            <input type="number" id="editPoints" value="${taskData.points}" required>
+            <label for="editUser">User:</label>
+            <input type="text" id="editUser" value="${taskData.user}" required>
+            <button type="button" onclick="saveEdit(this)">Save</button>
+        </form>
+    `;
+}
+
+function saveEdit(button) {
+    var editedForm = button.parentElement;
+    var task = editedForm.parentElement;
+
+    // Get the edited data
+    var editedData = {
+        name: editedForm.querySelector("#editName").value,
+        description: editedForm.querySelector("#editDescription").value,
+        points: editedForm.querySelector("#editPoints").value,
+        user: editedForm.querySelector("#editUser").value
+    };
+
+    // Update the task with the edited data
+    task.innerHTML = `
+        <h3>${editedData.name}</h3>
+        <p>Description: <span>${editedData.description}</span></p>
+        <p>Points: <span>${editedData.points}</span></p>
+        <p>User: <span>${editedData.user}</span></p>
+        <button onclick="toggleDescription(this)">Toggle Description</button>
+        <button onclick="editTask(this)">Edit</button>
+    `;
 }
