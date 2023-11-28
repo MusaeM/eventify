@@ -18,7 +18,7 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 400px;
+    max-width: 600px; /* Increased max-width for better table display */
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
@@ -73,3 +73,21 @@ body {
     flex-wrap: wrap;
     justify-content: space-between;
 }
+
+#taskListTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#taskListTable th,
+#taskListTable td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+#taskListTable th {
+    background-color: #f2f2f2;
+}
+
