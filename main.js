@@ -69,8 +69,22 @@ async function openFolder(folderName) {
         if (selectedFolder && passwordInput === selectedFolder.password) {
             currentFolder = folderName;
 
-            // Display entries in a popup
-            displayEntriesPopup(selectedFolder.entries);
+            // Check if elements are not null before accessing their properties
+            const folderListElement = document.getElementById('folderList');
+            const folderContentElement = document.getElementById('folderContent');
+            const entryFormElement = document.getElementById('taskForm');
+
+            if (folderListElement && folderContentElement && entryFormElement) {
+                folderListElement.style.display = 'none';
+                folderContentElement.style.display = 'block';
+                entryFormElement.style.display = 'none'; // Hide entry form for now
+
+                // Display entries in a new table underneath the folder table
+                const entryTable = createEntryTable(selectedFolder.entries);
+                folderContentElement.appendChild(entryTable);
+            } else {
+                console.error('Error: One or more elements are null.');
+            }
         } else {
             alert('Incorrect password. Please try again.');
         }
@@ -79,26 +93,39 @@ async function openFolder(folderName) {
     }
 }
 
-// Function to display entries in a popup
-function displayEntriesPopup(entries) {
-    let popupContent = '<h2>Folder Entries</h2><table>';
-    popupContent += '<tr><th>Name</th><th>Description</th><th>Points</th><th>User</th></tr>';
+// Function to create table for folder entries
+function createEntryTable(entries) {
+    const table = document.createElement('table');
+    table.id = 'entryTable';
 
-    entries.forEach(entry => {
-        popupContent += `<tr>
-                            <td>${entry.name}</td>
-                            <td>${entry.description}</td>
-                            <td>${entry.points}</td>
-                            <td>${entry.user}</td>
-                         </tr>`;
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headers = ['Name', 'Description', 'Points', 'User'];
+
+    headers.forEach(headerText => {
+        const th = document.createElement('th');
+        th.textContent = headerText;
+        headerRow.appendChild(th);
     });
 
-    popupContent += '</table>';
-    
-    // Open a new window with the entries popup content
-    const entriesPopup = window.open('', 'EntriesPopup', 'width=600,height=400');
-    entriesPopup.document.body.innerHTML = popupContent;
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    const tbody = document.createElement('tbody');
+
+    entries.forEach(entry => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${entry.name}</td>
+                        <td>${entry.description}</td>
+                        <td>${entry.points}</td>
+                        <td>${entry.user}</td>`;
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    return table;
 }
+
 
 
 
