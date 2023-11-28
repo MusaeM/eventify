@@ -67,9 +67,19 @@ async function openFolder(folderName) {
         // Validate the password
         if (selectedFolder && passwordInput === selectedFolder.password) {
             currentFolder = folderName;
-            document.getElementById('folderList').style.display = 'none';
-            document.getElementById('folderContent').style.display = 'block';
-            document.getElementById('entryForm').style.display = 'block';
+
+            // Check if elements are not null before accessing their properties
+            const folderListElement = document.getElementById('folderList');
+            const folderContentElement = document.getElementById('folderContent');
+            const entryFormElement = document.getElementById('entryForm');
+
+            if (folderListElement && folderContentElement && entryFormElement) {
+                folderListElement.style.display = 'none';
+                folderContentElement.style.display = 'block';
+                entryFormElement.style.display = 'block';
+            } else {
+                console.error('Error: One or more elements are null.');
+            }
         } else {
             alert('Incorrect password. Please try again.');
         }
@@ -77,7 +87,6 @@ async function openFolder(folderName) {
         console.error('Error opening folder:', error);
     }
 }
-
 
 
 // Function to edit a folder
