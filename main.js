@@ -1,7 +1,7 @@
 function openFolder() {
     var password = document.getElementById("folderPassword").value;
     // Check password (you may want to implement proper authentication)
-    if (password === "eventify") {
+    if (password === "yourpassword") {
         document.getElementById("folderContent").style.display = "block";
         document.getElementById("taskListContainer").removeChild(document.getElementById("folderPassword"));
         document.getElementById("taskListContainer").removeChild(document.querySelector("button"));
@@ -12,7 +12,6 @@ function openFolder() {
 
 function showAddForm() {
     document.getElementById("entryForm").style.display = "block";
-    document.querySelector("button").style.display = "none";
 }
 
 function addTask() {
@@ -32,12 +31,20 @@ function addTask() {
         <button onclick="toggleDescription(this)">Toggle Description</button>
         <button onclick="editTask(this)">Edit</button>
     `;
+    
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = function() {
+        taskList.removeChild(taskEntry);
+    };
+    
+    taskEntry.appendChild(deleteButton);
+    
     taskList.appendChild(taskEntry);
 
     // Clear the form and hide it
     document.getElementById("taskForm").reset();
     document.getElementById("entryForm").style.display = "none";
-    document.querySelector("button").style.display = "block";
 }
 
 function toggleDescription(button) {
@@ -92,4 +99,12 @@ function saveEdit(button) {
         <button onclick="toggleDescription(this)">Toggle Description</button>
         <button onclick="editTask(this)">Edit</button>
     `;
+    
+    var deleteButton = document.createElement("button");
+    deleteButton.textContent = "Delete";
+    deleteButton.onclick = function() {
+        task.parentElement.removeChild(task);
+    };
+    
+    task.appendChild(deleteButton);
 }
