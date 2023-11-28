@@ -14,31 +14,33 @@
         <button onclick="openFolder()">Open Folder</button>
         <div class="task-list-content" id="folderContent">
             <h2>Folder Name</h2>
-            <button onclick="showAddForm()">Add Entry</button>
-            <div id="taskList"></div>
-            <div id="entryForm" style="display: none;">
-                <form id="taskForm" class="horizontal-form">
-                    <div class="form-group">
-                        <label for="entryName">Name:</label>
-                        <input type="text" id="entryName" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="entryDescription">Description:</label>
-                        <textarea id="entryDescription"></textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="entryPoints">Points:</label>
-                        <input type="number" id="entryPoints" value="10" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="entryUser">User:</label>
-                        <input type="text" id="entryUser" required>
-                    </div>
-                    <div class="form-buttons">
-                        <button type="button" onclick="addTask()">Add</button>
-                    </div>
-                </form>
+            <div id="entryFormContainer">
+                <button onclick="showAddForm()">Add Entry</button>
+                <div id="entryForm" style="display: none;">
+                    <form id="taskForm" class="horizontal-form">
+                        <div class="form-group">
+                            <label for="entryName">Name:</label>
+                            <input type="text" id="entryName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="entryDescription">Description:</label>
+                            <textarea id="entryDescription"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="entryPoints">Points:</label>
+                            <input type="number" id="entryPoints" value="10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="entryUser">User:</label>
+                            <input type="text" id="entryUser" required>
+                        </div>
+                        <div class="form-buttons">
+                            <button type="button" onclick="addTask()">Add</button>
+                        </div>
+                    </form>
+                </div>
             </div>
+            <div id="taskList"></div>
         </div>
     </div>
 </div>
