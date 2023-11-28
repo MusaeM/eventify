@@ -3,18 +3,35 @@ let foldersData = []; // Array to store folder information
 
 // Function to check the entered password
 function checkPassword() {
-    const enteredPassword = document.getElementById('appPassword').value;
-    const correctPassword = 'eventify1e3T'; // Replace with your actual password
+    const enteredPasswordInput = document.getElementById('appPassword');
 
-    if (enteredPassword === correctPassword) {
-        // Password correct, display the app content
-        document.getElementById('passwordPrompt').style.display = 'none';
-        document.querySelector('.container').style.display = 'block';
-    } else {
-        // Password incorrect, show an alert
-        alert('Incorrect password. Please try again.');
-    }
+    // Function to handle checking password and displaying app content
+    const handlePasswordCheck = () => {
+        const enteredPassword = enteredPasswordInput.value;
+        const correctPassword = 'eventify1e3T'; // Replace with your actual password
+
+        if (enteredPassword === correctPassword) {
+            // Password correct, display the app content
+            document.getElementById('passwordPrompt').style.display = 'none';
+            document.querySelector('.container').style.display = 'block';
+        } else {
+            // Password incorrect, show an alert
+            alert('Incorrect password. Please try again.');
+        }
+    };
+
+    // Check password when Enter key is pressed
+    enteredPasswordInput.addEventListener('keydown', function onKeydown(event) {
+        if (event.key === 'Enter') {
+            enteredPasswordInput.removeEventListener('keydown', onKeydown); // Remove the event listener
+            handlePasswordCheck();
+        }
+    });
+
+    // Also check password when clicking the "Submit" button
+    document.getElementById('submitButton').addEventListener('click', handlePasswordCheck);
 }
+
 
 // Initial check if the user needs to enter the password
 window.onload = function () {
