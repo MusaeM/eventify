@@ -53,12 +53,27 @@ function createFolderListTable(folderList) {
 }
 
 // Function to open a folder
-function openFolder(folderName) {
-    currentFolder = folderName;
-    document.getElementById('folderList').style.display = 'none';
-    document.getElementById('folderContent').style.display = 'block';
-    document.getElementById('entryForm').style.display = 'block';
+async function openFolder(folderName) {
+    const passwordInput = prompt('Enter the password for the folder:');
+    
+    // Fetch folder data from the 'data.json' file
+    const response = await fetch('data.json');
+    const foldersData = await response.json();
+    
+    // Find the folder with the specified name
+    const selectedFolder = foldersData.find(folder => folder.name === folderName);
+
+    // Validate the password
+    if (selectedFolder && passwordInput === selectedFolder.password) {
+        currentFolder = folderName;
+        document.getElementById('folderList').style.display = 'none';
+        document.getElementById('folderContent').style.display = 'block';
+        document.getElementById('entryForm').style.display = 'block';
+    } else {
+        alert('Incorrect password. Please try again.');
+    }
 }
+
 
 // Function to edit a folder
 async function editFolder(folderName) {
