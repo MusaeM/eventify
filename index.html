@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Password-Protected Folders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .folder {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            position: relative;
+        }
+        .folder input {
+            margin-bottom: 5px;
+        }
+        .folder-content {
+            display: none;
+            margin-top: 10px;
+        }
+        .entry {
+            border: 1px solid #ddd;
+            padding: 5px;
+            margin: 5px;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+
+<div class="folder">
+    <input type="password" placeholder="Enter Password" id="folderPassword">
+    <button onclick="openFolder()">Open Folder</button>
+    <div class="folder-content" id="folderContent">
+        <h2>Folder Name</h2>
+        <div>
+            <h3>Entries</h3>
+            <div class="entry" id="entry1">
+                <h4>Entry 1</h4>
+                <p>Description: Lorem ipsum dolor sit amet.</p>
+                <p>Points: <span id="points1">10</span></p>
+                <p>User: <select id="user1"><option value="user1">User 1</option></select></p>
+                <label>Done: <input type="checkbox" id="done1"></label>
+                <button onclick="editEntry('entry1')">Edit</button>
+                <button onclick="deleteEntry('entry1')">Delete</button>
+            </div>
+        </div>
+        <button onclick="addEntry()">Add Entry</button>
+    </div>
+</div>
+
+<script>
+    function openFolder() {
+        var password = document.getElementById("folderPassword").value;
+        // Check password (you may want to implement proper authentication)
+        if (password === "yourpassword") {
+            document.getElementById("folderContent").style.display = "block";
+        } else {
+            alert("Invalid password");
+        }
+    }
+
+    function addEntry() {
+        var folderContent = document.getElementById("folderContent");
+        var entryCount = folderContent.getElementsByClassName("entry").length + 1;
+        var entryId = "entry" + entryCount;
+        var newEntry = document.createElement("div");
+        newEntry.className = "entry";
+        newEntry.id = entryId;
+        newEntry.innerHTML = `
+            <h4>Entry ${entryCount}</h4>
+            <p>Description: <input type="text" id="desc${entryCount}"</p>
+            <p>Points: <input type="number" id="points${entryCount}" value="10"</p>
+            <p>User: <select id="user${entryCount}"><option value="user1">User 1</option></select></p>
+            <label>Done: <input type="checkbox" id="done${entryCount}"></label>
+            <button onclick="editEntry('${entryId}')">Edit</button>
+            <button onclick="deleteEntry('${entryId}')">Delete</button>
+        `;
+        folderContent.appendChild(newEntry);
+    }
+
+    function editEntry(entryId) {
+        // Implement edit functionality as needed
+        alert("Edit entry: " + entryId);
+    }
+
+    function deleteEntry(entryId) {
+        var entry = document.getElementById(entryId);
+        entry.parentNode.removeChild(entry);
+    }
+</script>
+
+</body>
+</html>
