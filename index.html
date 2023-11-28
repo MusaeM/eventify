@@ -9,14 +9,27 @@
 <body>
 
 <div class="container">
-    <div class="task-list">
+    <div class="task-list" id="taskListContainer">
         <input type="password" placeholder="Enter Password" id="folderPassword">
         <button onclick="openFolder()">Open Folder</button>
         <div class="task-list-content" id="folderContent">
             <h2>Folder Name</h2>
-            <!-- Task entries added by JS -->
+            <button onclick="showAddForm()">Add Entry</button>
+            <div id="entryForm" style="display: none;">
+                <form id="taskForm">
+                    <label for="entryName">Name:</label>
+                    <input type="text" id="entryName" required>
+                    <label for="entryDescription">Description:</label>
+                    <textarea id="entryDescription"></textarea>
+                    <label for="entryPoints">Points:</label>
+                    <input type="number" id="entryPoints" value="10" required>
+                    <label for="entryUser">User:</label>
+                    <input type="text" id="entryUser" required>
+                    <button type="button" onclick="addTask()">Add</button>
+                </form>
+            </div>
+            <div id="taskList"></div>
         </div>
-        <button onclick="addTask()">Add Task</button>
     </div>
 </div>
 
