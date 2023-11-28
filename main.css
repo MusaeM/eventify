@@ -6,54 +6,54 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    background-color: #5feefe; /* background color */
+    background-color: #fe5f75;
 }
 
 .container {
     text-align: center;
 }
 
-.task-list {
+#folderList {
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 600px; /* Increased max-width for better table display */
+    max-width: 600px;
     width: 100%;
     box-sizing: border-box;
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
-.task-list input,
-.task-list textarea,
-.task-list button {
+#folderList table {
     width: 100%;
-    margin-bottom: 10px;
-    box-sizing: border-box;
-}
-
-.task-list textarea {
-    height: 80px;
-}
-
-.task-list-content {
-    display: none;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
-.task {
-    background-color: #fff; /* White background for entries */
+#folderList th,
+#folderList td {
     border: 1px solid #ddd;
-    padding: 10px;
-    margin: 10px;
-    border-radius: 5px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    padding: 8px;
+    text-align: left;
 }
 
-.task button {
-    margin-top: 5px;
+#folderList th {
+    background-color: #fe5f75;
+    color: #fff;
+}
+
+#folderList button {
+    background-color: #fe5f75;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 3px;
+}
+
+#folderList button:hover {
+    background-color: #d64558;
 }
 
 .form-group {
@@ -65,31 +65,47 @@ body {
 
 .form-buttons {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
 }
 
-.horizontal-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+#folderForm,
+#passwordForm {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-#taskListTable {
+#folderContent {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    max-width: 600px;
+    width: 100%;
+    box-sizing: border-box;
+    display: none;
+}
+
+#folderContent table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
 }
 
-#taskListTable th,
-#taskListTable td {
+#folderContent th,
+#folderContent td {
     border: 1px solid #ddd;
     padding: 8px;
     text-align: left;
 }
 
-#taskListTable th {
-    background-color: #5feefe; /* Header background color */
-    color: #fff; /* White text color for header */
+#folderContent th {
+    background-color: #fe5f75;
+    color: #fff;
 }
 
 .entry-buttons {
@@ -99,8 +115,8 @@ body {
 
 .entry-buttons button {
     margin-left: 5px;
-    background-color: #5feefe; /* Button background color */
-    color: #fff; /* White text color for button */
+    background-color: #fe5f75;
+    color: #fff;
     border: none;
     padding: 5px 10px;
     cursor: pointer;
@@ -108,5 +124,5 @@ body {
 }
 
 .entry-buttons button:hover {
-    background-color: #45bed6; /* Slightly darker red on hover */
+    background-color: #d64558;
 }
