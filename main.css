@@ -36,8 +36,11 @@ body {
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column; /* Set the direction to column */
+    align-items: center; /* Center items horizontally */
 }
 
 .task button {
-    margin-left: 5px;
+    margin-top: 5px;
 }
