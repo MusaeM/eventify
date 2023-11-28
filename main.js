@@ -12,7 +12,6 @@ function openFolder() {
 
 function showAddForm() {
     document.getElementById("entryForm").style.display = "block";
-    document.querySelector("button").style.display = "none";
 }
 
 function addTask() {
@@ -37,7 +36,6 @@ function addTask() {
     // Clear the form and hide it
     document.getElementById("taskForm").reset();
     document.getElementById("entryForm").style.display = "none";
-    document.querySelector("button").style.display = "block";
 }
 
 function toggleDescription(button) {
