@@ -52,7 +52,8 @@ function createFolderListTable(folderList) {
     return table;
 }
 
-// Function to open a folder
+
+//Open FOlder
 async function openFolder(folderName) {
     const passwordInput = prompt('Enter the password for the folder:');
 
@@ -68,23 +69,8 @@ async function openFolder(folderName) {
         if (selectedFolder && passwordInput === selectedFolder.password) {
             currentFolder = folderName;
 
-            // Check if elements are not null before accessing their properties
-            const folderListElement = document.getElementById('folderList');
-            const folderContentElement = document.getElementById('folderContent');
-            const entryFormElement = document.getElementById('taskForm');
-
-            if (folderListElement && folderContentElement && entryFormElement) {
-                folderListElement.style.display = 'none';
-                folderContentElement.style.display = 'block';
-                entryFormElement.style.display = 'none'; // Hide entry form for now
-
-                // Display entries in a horizontal table
-                const entryTable = createEntryTable(selectedFolder.entries);
-                folderContentElement.innerHTML = ''; // Clear existing content
-                folderContentElement.appendChild(entryTable);
-            } else {
-                console.error('Error: One or more elements are null.');
-            }
+            // Display entries in a popup
+            displayEntriesPopup(selectedFolder.entries);
         } else {
             alert('Incorrect password. Please try again.');
         }
@@ -92,6 +78,28 @@ async function openFolder(folderName) {
         console.error('Error opening folder:', error);
     }
 }
+
+// Function to display entries in a popup
+function displayEntriesPopup(entries) {
+    let popupContent = '<h2>Folder Entries</h2><table>';
+    popupContent += '<tr><th>Name</th><th>Description</th><th>Points</th><th>User</th></tr>';
+
+    entries.forEach(entry => {
+        popupContent += `<tr>
+                            <td>${entry.name}</td>
+                            <td>${entry.description}</td>
+                            <td>${entry.points}</td>
+                            <td>${entry.user}</td>
+                         </tr>`;
+    });
+
+    popupContent += '</table>';
+    
+    // Open a new window with the entries popup content
+    const entriesPopup = window.open('', 'EntriesPopup', 'width=600,height=400');
+    entriesPopup.document.body.innerHTML = popupContent;
+}
+
 
 
 // Function to create table for folder entries
