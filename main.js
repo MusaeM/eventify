@@ -3,44 +3,50 @@ function openFolder() {
     // Check password (you may want to implement proper authentication)
     if (password === "yourpassword") {
         document.getElementById("folderContent").style.display = "block";
+        document.getElementById("taskListContainer").removeChild(document.getElementById("folderPassword"));
+        document.getElementById("taskListContainer").removeChild(document.querySelector("button"));
     } else {
         alert("Invalid password");
     }
 }
 
-function addTask() {
-    var folderContent = document.getElementById("folderContent");
-    var taskCount = folderContent.getElementsByClassName("task").length + 1;
-    var taskId = "task" + taskCount;
-    var newTask = document.createElement("div");
-    newTask.className = "task";
-    newTask.id = taskId;
-    newTask.innerHTML = `
-        <h3>Task ${taskCount}</h3>
-        <p>Description: <span id="desc${taskCount}">Lorem ipsum dolor sit amet.</span></p>
-        <p>Points: <span id="points${taskCount}">10</span></p>
-        <p>User: <span id="user${taskCount}">User 1</span></p>
-        <button onclick="editTask('${taskId}')">Edit</button>
-    `;
-    folderContent.appendChild(newTask);
+function showAddForm() {
+    document.getElementById("entryForm").style.display = "block";
+    document.querySelector("button").style.display = "none";
 }
 
-function editTask(taskId) {
-    var task = document.getElementById(taskId);
-    var editButton = task.querySelector('button');
+function addTask() {
+    var taskList = document.getElementById("taskList");
+    var entryName = document.getElementById("entryName").value;
+    var entryDescription = document.getElementById("entryDescription").value;
+    var entryPoints = document.getElementById("entryPoints").value;
+    var entryUser = document.getElementById("entryUser").value;
 
-    // Disable the "Edit" button
-    editButton.disabled = true;
+    var taskEntry = document.createElement("div");
+    taskEntry.className = "task";
+    taskEntry.innerHTML = `
+        <h3>${entryName}</h3>
+        <p>Description: <span>${entryDescription}</span></p>
+        <p>Points: <span>${entryPoints}</span></p>
+        <p>User: <span>${entryUser}</span></p>
+        <button onclick="toggleDescription(this)">Toggle Description</button>
+        <button onclick="editTask(this)">Edit</button>
+    `;
+    taskList.appendChild(taskEntry);
 
-    // Add "Save" button to allow saving changes
-    var saveButton = document.createElement("button");
-    saveButton.textContent = "Save";
-    saveButton.className = "edit-button";
-    saveButton.onclick = function () {
-        // Implement save functionality as needed
-        alert("Save task: " + taskId);
-        // Re-enable the "Edit" button after saving changes
-        editButton.disabled = false;
-    };
-    task.appendChild(saveButton);
+    // Clear the form and hide it
+    document.getElementById("taskForm").reset();
+    document.getElementById("entryForm").style.display = "none";
+    document.querySelector("button").style.display = "block";
+}
+
+function toggleDescription(button) {
+    var task = button.parentElement;
+    var description = task.querySelector("span");
+    description.style.display = description.style.display === "none" ? "inline" : "none";
+}
+
+function editTask(button) {
+    // Implement edit functionality as needed
+    alert("Edit task: " + button.parentElement.querySelector("h3").textContent);
 }
