@@ -1,6 +1,3 @@
-let currentFolder = null;
-let foldersData = []; // Array to store folder information
-
 // Function to display folders in tabular form
 async function displayFolders() {
     const folderListContainer = document.getElementById('taskList');
@@ -57,28 +54,39 @@ function openFolder(folderName) {
 }
 
 // Function to edit a folder
-function editFolder(folderName) {
+async function editFolder(folderName) {
     const updatedFolderName = prompt('Enter the new folder name:', folderName);
 
     if (updatedFolderName !== null && updatedFolderName !== '') {
-        // Rename the folder
-        const oldFolderPath = `data/${folderName}_entries.json`;
-        const newFolderPath = `data/${updatedFolderName}_entries.json`;
-        fetch(oldFolderPath)
-            .then(response => response.json())
-            .then(entries => {
-                fetch(newFolderPath, {
-                    method: 'PUT',
-                    body: JSON.stringify(entries),
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                })
-                    .then(() => deleteFolder(folderName))
-                    .then(() => displayFolders())
-                    .catch(error => console.error(`Error updating folder:`, error));
-            })
-            .catch(error => console.error(`Error fetching entries for folder:`, error));
+        try {
+            // Rename the folder and associated files
+            const oldFolderPath = `data/${folderName}_entries.json`;
+            const newFolderPath = `data/${updatedFolderName}_entries.json`;
+            const oldPasswordPath = `data/${folderName}_password.json`;
+            const newPasswordPath = `data/${updatedFolderName}_password.json`;
+
+            // Fetch entries from the old folder
+            const entriesResponse = await fetch(oldFolderPath);
+            const entries = await entriesResponse.json();
+
+            // Move entries to the new folder
+            await fetch(newFolderPath, {
+                method: 'PUT',
+                body: JSON.stringify(entries),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            // Delete the old folder and associated files
+            await fetch(oldFolderPath, { method: 'DELETE' });
+            await fetch(oldPasswordPath, { method: 'DELETE' });
+
+            // Display updated folder list
+            displayFolders();
+        } catch (error) {
+            console.error('Error updating folder:', error);
+        }
     }
 }
 
@@ -105,10 +113,57 @@ function resetApp() {
     document.getElementById('entryForm').style.display = 'none';
 }
 
-// Initial display of folders
-displayFolders();
+// Function to create a new folder
+async function createFolder() {
+    const newFolderName = document.getElementById('newFolderName').value;
 
-// Existing functions for managing tasks (addTask, editTask, deleteTask, etc.) go here
+    try {
+        // Check if the folder already exists
+        const folderListResponse = await fetch('data/');
+        const folderList = await folderListResponse.json();
+
+        if (!folderList.includes(newFolderName)) {
+            // Create a new folder and associated password file
+            const newFolderPath = `data/${newFolderName}_entries.json`;
+            const newPasswordPath = `data/${newFolderName}_password.json`;
+
+            // Placeholder password (replace with your logic to securely generate/store passwords)
+            const newPassword = 'eventify';
+
+            // Create the new folder's password file
+            await fetch(newPasswordPath, {
+                method: 'PUT',
+                body: JSON.stringify(newPassword),
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            // Create the new folder
+            await fetch(newFolderPath, {
+                method: 'PUT',
+                body: JSON.stringify([]), // Initial empty array for entries
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            // Display updated folder list
+            displayFolders();
+            cancelFolderCreation();
+        } else {
+            alert('Folder already exists. Please choose a different name.');
+        }
+    } catch (error) {
+        console.error('Error creating folder:', error);
+    }
+}
+
+// Function to cancel folder creation
+function cancelFolderCreation() {
+    document.getElementById('newFolderName').value = '';
+    document.getElementById('folderForm').style.display = 'none';
+}
 
 // Function to check the password and proceed to the folder content
 function checkPassword() {
@@ -213,3 +268,6 @@ function deleteTask(entryName) {
     // Remove the row from the table
     taskRow.parentElement.removeChild(taskRow);
 }
+
+// Initial display of folders
+displayFolders();
