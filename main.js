@@ -17,44 +17,30 @@ function addTask() {
     newTask.id = taskId;
     newTask.innerHTML = `
         <h3>Task ${taskCount}</h3>
-        <p>Description: <span id="desc${taskCount}" contenteditable="true"></span></p>
-        <p>Points: <span id="points${taskCount}" contenteditable="true">10</span></p>
-        <p>User: <select id="user${taskCount}"><option value="user1">User 1</option></select></p>
-        <label>Done: <input type="checkbox" id="done${taskCount}"></label>
+        <p>Description: <span id="desc${taskCount}">Lorem ipsum dolor sit amet.</span></p>
+        <p>Points: <span id="points${taskCount}">10</span></p>
+        <p>User: <span id="user${taskCount}">User 1</span></p>
         <button onclick="editTask('${taskId}')">Edit</button>
-        <button onclick="deleteTask('${taskId}')">Delete</button>
     `;
     folderContent.appendChild(newTask);
 }
 
 function editTask(taskId) {
     var task = document.getElementById(taskId);
-    var editButtons = task.getElementsByClassName("edit-button");
-    
-    // Disable contenteditable for all tasks
-    var allTasks = document.getElementsByClassName("task");
-    for (var i = 0; i < allTasks.length; i++) {
-        var taskElements = allTasks[i].querySelectorAll('[contenteditable="true"]');
-        for (var j = 0; j < taskElements.length; j++) {
-            taskElements[j].setAttribute("contenteditable", "false");
-        }
-    }
+    var editButton = task.querySelector('button');
 
-    // Enable contenteditable only for the clicked task
-    var taskElementsToEdit = task.querySelectorAll('[contenteditable="true"]');
-    for (var k = 0; k < taskElementsToEdit.length; k++) {
-        taskElementsToEdit[k].setAttribute("contenteditable", "true");
-    }
+    // Disable the "Edit" button
+    editButton.disabled = true;
 
     // Add "Save" button to allow saving changes
-    if (editButtons.length === 0) {
-        var saveButton = document.createElement("button");
-        saveButton.textContent = "Save";
-        saveButton.className = "edit-button";
-        saveButton.onclick = function () {
-            // Implement save functionality as needed
-            alert("Save task: " + taskId);
-        };
-        task.appendChild(saveButton);
-    }
+    var saveButton = document.createElement("button");
+    saveButton.textContent = "Save";
+    saveButton.className = "edit-button";
+    saveButton.onclick = function () {
+        // Implement save functionality as needed
+        alert("Save task: " + taskId);
+        // Re-enable the "Edit" button after saving changes
+        editButton.disabled = false;
+    };
+    task.appendChild(saveButton);
 }
