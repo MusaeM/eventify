@@ -55,6 +55,7 @@ function createFolder() {
             foldersData.push({ name: newFolderName });
             createFolderFile(newFolderName);
             displayFolders();
+            openFolder(newFolderName); // Open the newly created folder
         } else {
             alert('Folder already exists.');
         }
@@ -174,7 +175,7 @@ function openFolder(folderName) {
 function checkPassword() {
     const password = document.getElementById('folderPassword').value;
 
-    // Assume password checking logic here (replace with your own logic)
+    // Placeholder logic: Assume password checking logic here (replace with your own logic)
     const isPasswordCorrect = true; // Replace with actual password validation
 
     if (isPasswordCorrect) {
