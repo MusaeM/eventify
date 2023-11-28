@@ -18,17 +18,22 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    max-width: 400px; /* Limit the width for better readability on smaller screens */
-    width: 100%; /* Make sure it takes the full width on smaller screens */
-    box-sizing: border-box; /* Include padding and border in the width calculation */
-    overflow: hidden; /* Prevent the shadow from overflowing */
+    max-width: 400px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .task-list input,
+.task-list textarea,
 .task-list button {
     width: 100%;
     margin-bottom: 10px;
-    box-sizing: border-box; /* Include padding and border in the width calculation */
+    box-sizing: border-box;
+}
+
+.task-list textarea {
+    height: 80px;
 }
 
 .task-list-content {
@@ -51,7 +56,20 @@ body {
     margin-top: 5px;
 }
 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
 .form-buttons {
     display: flex;
     justify-content: flex-end;
+}
+
+.horizontal-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
