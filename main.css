@@ -18,11 +18,17 @@ body {
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
+    max-width: 400px; /* Limit the width for better readability on smaller screens */
+    width: 100%; /* Make sure it takes the full width on smaller screens */
+    box-sizing: border-box; /* Include padding and border in the width calculation */
+    overflow: hidden; /* Prevent the shadow from overflowing */
 }
 
 .task-list input,
 .task-list button {
+    width: 100%;
     margin-bottom: 10px;
+    box-sizing: border-box; /* Include padding and border in the width calculation */
 }
 
 .task-list-content {
@@ -37,10 +43,15 @@ body {
     margin: 10px;
     border-radius: 5px;
     display: flex;
-    flex-direction: column; /* Set the direction to column */
-    align-items: center; /* Center items horizontally */
+    flex-direction: column;
+    align-items: center;
 }
 
 .task button {
     margin-top: 5px;
+}
+
+.form-buttons {
+    display: flex;
+    justify-content: flex-end;
 }
