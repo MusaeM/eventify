@@ -98,38 +98,8 @@ async function openFolder(folderName) {
         if (selectedFolder && passwordInput === selectedFolder.password) {
             currentFolder = folderName;
 
-            // Check if elements are not null before accessing their properties
-            const folderListElement = document.getElementById('folderList');
-            const folderContentElement = document.getElementById('folderContent');
-            const entryFormElement = document.getElementById('taskForm');
-
-            if (folderListElement && folderContentElement && entryFormElement) {
-                // Hide folder table and entry form
-                folderListElement.style.display = 'none';
-                entryFormElement.style.display = 'none';
-
-                // Display entries in a new table underneath the folder table
-                const entryTable = createEntryTable(selectedFolder.entries);
-                
-                // Find or create a tbody in the folderContentElement
-                let tbody = folderContentElement.querySelector('#entryTableBody');
-                if (!tbody) {
-                    tbody = document.createElement('tbody');
-                    tbody.id = 'entryTableBody';
-                }
-
-                // Clear existing content and append the entries table
-                tbody.innerHTML = '';
-                tbody.appendChild(entryTable);
-
-                // Append the tbody to the folderContentElement
-                folderContentElement.appendChild(tbody);
-
-                // Show folder content
-                folderContentElement.style.display = 'block';
-            } else {
-                console.error('Error: One or more elements are null.');
-            }
+            // Display entries in a popup
+            displayEntriesPopup(selectedFolder.entries);
         } else {
             alert('Incorrect password. Please try again.');
         }
@@ -137,6 +107,46 @@ async function openFolder(folderName) {
         console.error('Error opening folder:', error);
     }
 }
+
+// Function to get password input with Enter key support
+function getPasswordInput(promptMessage) {
+    return new Promise(resolve => {
+        const passwordInput = prompt(promptMessage);
+
+        // Resolve the promise when Enter key is pressed
+        document.addEventListener('keydown', function onKeydown(event) {
+            if (event.key === 'Enter') {
+                document.removeEventListener('keydown', onKeydown); // Remove the event listener
+                resolve(passwordInput);
+            }
+        });
+    });
+}
+
+// Function to display entries in a popup
+function displayEntriesPopup(entries) {
+    let popupContent = '<h2>Folder Entries</h2><table>';
+    popupContent += '<tr><th>Name</th><th>Description</th><th>Points</th><th>User</th></tr>';
+
+    entries.forEach(entry => {
+        popupContent += `<tr>
+                            <td>${entry.name}</td>
+                            <td>${entry.description}</td>
+                            <td>${entry.points}</td>
+                            <td>${entry.user}</td>
+                         </tr>`;
+    });
+
+    popupContent += '</table>';
+    
+    // Open a new window with the entries popup content
+    const entriesPopup = window.open('', 'EntriesPopup', 'width=600,height=400');
+    entriesPopup.document.body.innerHTML = popupContent;
+}
+
+
+
+
 
 
 // Function to create table for folder entries
