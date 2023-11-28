@@ -56,6 +56,17 @@ body {
     margin-top: 5px;
 }
 
+
+.entry-buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.entry-buttons button {
+    margin-left: 5px;
+}
+
+
 .form-group {
     display: flex;
     flex-direction: column;
